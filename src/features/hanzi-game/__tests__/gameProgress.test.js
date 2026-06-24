@@ -19,6 +19,13 @@ describe('gameProgress helpers', () => {
     expect(buildRoundReward('complete')).toEqual({ stars: 3, streakDelta: 1 })
   })
 
+  test('returns a fresh reward object each time', () => {
+    const reward = buildRoundReward('strong')
+    reward.stars = 0
+
+    expect(buildRoundReward('strong')).toEqual({ stars: 6, streakDelta: 1 })
+  })
+
   test('builds mission feedback from character progress', () => {
     expect(buildMissionFeedback({ character: '我', mistakes: 3 })).toEqual({
       statusText: '完成「我」书写任务',

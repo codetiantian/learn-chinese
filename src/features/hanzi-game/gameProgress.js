@@ -26,7 +26,7 @@ export function getPerformanceTier(mistakes) {
 }
 
 export function buildRoundReward(performanceTier) {
-  return REWARDS_BY_TIER[performanceTier]
+  return { ...REWARDS_BY_TIER[performanceTier] }
 }
 
 export function buildMissionFeedback({ character, mistakes }) {
