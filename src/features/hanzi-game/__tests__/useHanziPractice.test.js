@@ -21,7 +21,7 @@ describe('useHanziPractice', () => {
     const createWriter = vi.fn(() => writer)
     const targetRef = ref({ innerHTML: 'legacy markup' })
 
-    const practice = createScopedPractice({ targetRef, createWriter })
+    const practice = createScopedPractice({ targetRef, createWriter, initialChar: '我' })
 
     expect(practice.currentChar.value).toBe('我')
 
