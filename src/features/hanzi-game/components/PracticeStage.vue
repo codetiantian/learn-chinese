@@ -14,6 +14,10 @@ const props = defineProps({
     type: String,
     default: 'animate',
   },
+  groupMode: {
+    type: String,
+    default: 'common',
+  },
   loop: {
     type: Boolean,
     default: false,
@@ -46,6 +50,22 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  pinyin: {
+    type: String,
+    default: '',
+  },
+  meaning: {
+    type: String,
+    default: '',
+  },
+  number: {
+    type: Number,
+    default: null,
+  },
+  ttsAvailable: {
+    type: Boolean,
+    default: false,
+  },
   missionTitle: {
     type: String,
     default: '',
@@ -68,7 +88,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['play', 'toggle-loop', 'start-quiz'])
+const emit = defineEmits(['play', 'toggle-loop', 'start-quiz', 'speak'])
 
 const isAnimate = computed(() => props.mode === 'animate')
 const primaryLabel = computed(() => (isAnimate.value ? '开始闯关' : '重新书写'))
@@ -76,6 +96,15 @@ const progressPct = computed(() => {
   if (!props.totalStrokes) return 0
   return Math.min(100, Math.round((props.currentStroke / props.totalStrokes) * 100))
 })
+
+// 数字模式下的计数点阵：最多显示 10 个点，超过则用「…」省略。
+const countDots = computed(() => {
+  if (props.number == null) return ''
+  const dots = Math.min(props.number, 10)
+  return '●'.repeat(dots) + (props.number > 10 ? ' …' : '')
+})
+const isPinyinFocus = computed(() => props.groupMode === 'pinyin')
+const isNumbers = computed(() => props.groupMode === 'numbers')
 </script>
 
 <template>
@@ -87,6 +116,26 @@ const progressPct = computed(() => {
         <p class="goal">{{ props.goalText }}</p>
       </div>
       <span class="stroke-chip">共 {{ props.totalStrokes }} 笔</span>
+    </div>
+
+    <div class="meta-strip" :data-mode="props.groupMode">
+      <div class="meta-main">
+        <p v-if="props.pinyin" class="pinyin" :class="{ focus: isPinyinFocus }">{{ props.pinyin }}</p>
+        <p v-if="props.meaning" class="meaning">{{ props.meaning }}</p>
+        <p v-if="isNumbers && props.number != null" class="count">
+          {{ props.number }}<span v-if="countDots" class="dots"> · {{ countDots }}</span>
+        </p>
+      </div>
+      <button
+        v-if="props.pinyin"
+        type="button"
+        class="speak"
+        :disabled="!props.ttsAvailable"
+        :title="props.ttsAvailable ? '听发音' : '当前浏览器不支持发音'"
+        @click="emit('speak')"
+      >
+        🔊 发音
+      </button>
     </div>
 
     <div class="writer-shell">
@@ -192,6 +241,73 @@ h2 {
   background: var(--color-mint-soft);
   font-size: 0.85rem;
   white-space: nowrap;
+}
+
+.meta-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.9rem;
+  background: #f3f6fb;
+}
+
+.meta-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.85rem;
+  min-width: 0;
+}
+
+.meta-main p {
+  margin: 0;
+}
+
+.pinyin {
+  font-size: 1rem;
+  color: var(--color-ink-strong);
+  letter-spacing: 0.02em;
+}
+
+.pinyin.focus {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-mint);
+}
+
+.meaning {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+.count {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-accent-strong);
+}
+
+.count .dots {
+  color: var(--color-ink-soft);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+.speak {
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  font: inherit;
+  font-size: 0.85rem;
+  color: #fff;
+  background: var(--color-mint);
+}
+
+.speak:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .writer-shell {

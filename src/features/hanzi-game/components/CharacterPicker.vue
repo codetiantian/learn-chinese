@@ -2,7 +2,12 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-  inputChar: {
+  // 当前分组可选项：[{ key, label }]
+  items: {
+    type: Array,
+    default: () => [],
+  },
+  activeKey: {
     type: String,
     default: '',
   },
@@ -10,11 +15,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  presets: {
-    type: Array,
-    default: () => [],
+  // 自定义输入仅 common 组需要
+  allowCustom: {
+    type: Boolean,
+    default: true,
   },
-  currentChar: {
+  // 自定义输入框文本（common 组用）
+  inputChar: {
     type: String,
     default: '',
   },
@@ -42,12 +49,12 @@ function toggleInput() {
   <section class="character-picker">
     <div class="picker-head">
       <h2>选字开练</h2>
-      <button type="button" class="toggle" @click="toggleInput">
+      <button v-if="props.allowCustom" type="button" class="toggle" @click="toggleInput">
         {{ inputOpen ? '收起' : '自定义' }}
       </button>
     </div>
 
-    <div v-if="inputOpen" class="input-row">
+    <div v-if="props.allowCustom && inputOpen" class="input-row">
       <input
         :value="props.inputChar"
         type="text"
@@ -63,14 +70,14 @@ function toggleInput() {
 
     <div class="presets">
       <button
-        v-for="preset in props.presets"
-        :key="preset"
+        v-for="item in props.items"
+        :key="item.key"
         type="button"
         class="preset"
-        :class="{ active: preset === props.currentChar }"
-        @click="emit('pick', preset)"
+        :class="{ active: item.key === props.activeKey }"
+        @click="emit('pick', item.key)"
       >
-        {{ preset }}
+        {{ item.label }}
       </button>
     </div>
   </section>
