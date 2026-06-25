@@ -66,6 +66,31 @@ describe('useHanziPractice', () => {
     expect(practice.totalMistakes.value).toBe(2)
   })
 
+  test('cancels the quiz when the scope is disposed', () => {
+    const writer = {
+      animateCharacter: vi.fn(),
+      quiz: vi.fn(),
+      cancelQuiz: vi.fn(),
+      showCharacter: vi.fn(),
+    }
+    const scope = effectScope()
+    const targetRef = ref({ innerHTML: '' })
+    let practice
+
+    scope.run(() => {
+      practice = useHanziPractice({
+        targetRef,
+        createWriter: vi.fn(() => writer),
+        initialChar: '我',
+      })
+      practice.mount()
+    })
+
+    scope.stop()
+
+    expect(writer.cancelQuiz).toHaveBeenCalledTimes(1)
+  })
+
   function createScopedPractice(options) {
     const scope = effectScope()
     scopes.push(scope)

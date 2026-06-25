@@ -71,10 +71,14 @@ export function useHanziPractice({
       markStrokeCorrectAfterMisses: 6,
       onMistake: (summary) => {
         totalMistakes.value = summary.totalMistakes
+        status.value = `第 ${summary.strokeNum + 1} 笔:方向或形状不对,再试一次(本笔已错 ${summary.mistakesOnStroke} 次)`
       },
       onCorrectStroke: (summary) => {
         currentStroke.value = summary.strokeNum + 1
         totalMistakes.value = summary.totalMistakes
+        status.value = summary.strokesRemaining > 0
+          ? `第 ${summary.strokeNum + 1} 笔正确!还剩 ${summary.strokesRemaining} 笔`
+          : '最后一笔正确!'
       },
       onComplete: (summary) => {
         quizDone.value = true
@@ -119,10 +123,7 @@ export function useHanziPractice({
 
     if (loop.value && mode.value === 'animate') {
       playAnimation()
-      return
     }
-
-    writer?.showCharacter?.()
   }
 
   function submitChar() {
