@@ -1,30 +1,22 @@
 <script setup>
-import { defineComponent, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
+import { useHanziPractice } from '@/composables/useHanziPractice'
+
+import { buildMissionFeedback } from './gameProgress'
 import ChapterMap from './components/ChapterMap.vue'
 import CharacterPicker from './components/CharacterPicker.vue'
 import GameHeader from './components/GameHeader.vue'
-
-const PracticeStage = defineComponent({
-  name: 'PracticeStage',
-  template: '<div class="placeholder-block">练习舞台将在下一步接入</div>',
-})
-
-const TaskPanel = defineComponent({
-  name: 'TaskPanel',
-  template: '<div class="placeholder-block">任务面板将在下一步接入</div>',
-})
+import PracticeStage from './components/PracticeStage.vue'
+import TaskPanel from './components/TaskPanel.vue'
 
 const chapterTitle = '第 1 章'
 const dailyProgress = 42
-const streak = 3
-const stars = 18
 
-const inputChar = ref('我')
-const currentChar = ref('我')
-const loading = ref(false)
+const writerTarget = ref(null)
 const mapExpanded = ref(true)
-
+const streak = ref(3)
+const stars = ref(18)
 const presets = ['我', '你', '好', '学', '中', '国']
 const levels = [
   { id: 1, name: '起步' },
@@ -32,11 +24,46 @@ const levels = [
   { id: 3, name: '识记' },
 ]
 
-function submitCharacter() {}
+const practice = useHanziPractice({
+  targetRef: writerTarget,
+  initialChar: '我',
+})
+
+const missionTitle = computed(() => `完成「${practice.currentChar.value}」的书写练习`)
+const missionGoal = '目标：错误少于 5 次'
+const activeLevel = computed(() => (practice.mode.value === 'quiz' ? 2 : 1))
+const missionFeedback = computed(() => buildMissionFeedback({
+  character: practice.currentChar.value,
+  mistakes: practice.totalMistakes.value,
+}))
+
+onMounted(() => {
+  practice.mount()
+})
+
+function updateInputChar(value) {
+  practice.inputChar.value = value
+}
+
+function submitCharacter() {
+  practice.submitChar()
+}
 
 function pickCharacter(character) {
-  currentChar.value = character
-  inputChar.value = character
+  practice.pickPreset(character)
+}
+
+function setMode(mode) {
+  practice.mode.value = mode
+}
+
+function startMission() {
+  if (practice.mode.value === 'quiz') {
+    practice.startQuiz()
+    return
+  }
+
+  practice.mode.value = 'quiz'
 }
 </script>
 
@@ -50,34 +77,44 @@ function pickCharacter(character) {
     />
 
     <CharacterPicker
-      v-model:input-char="inputChar"
-      :loading="loading"
+      :input-char="practice.inputChar.value"
+      :loading="practice.loading.value"
       :presets="presets"
-      :current-char="currentChar"
+      :current-char="practice.currentChar.value"
+      @update:input-char="updateInputChar"
       @submit="submitCharacter"
       @pick="pickCharacter"
     />
 
-    <section class="practice-shell">
-      <div class="section-heading">
-        <h2>书写舞台</h2>
-        <p>{{ chapterTitle }}</p>
-      </div>
-      <PracticeStage />
-    </section>
+    <PracticeStage
+      :writer-target="writerTarget"
+      :current-char="practice.currentChar.value"
+      :mode="practice.mode.value"
+      :loop="practice.loop.value"
+      :loading="practice.loading.value"
+      :has-data="practice.hasData.value"
+      :status="practice.status.value"
+      :total-strokes="practice.totalStrokes.value"
+      :current-stroke="practice.currentStroke.value"
+      @update:mode="setMode"
+      @play="practice.playAnimation"
+      @toggle-loop="practice.toggleLoop"
+      @start-quiz="startMission"
+    />
 
-    <section class="task-shell">
-      <div class="section-heading">
-        <h2>快速任务</h2>
-        <p>保持节奏，连贯闯关</p>
-      </div>
-      <TaskPanel />
-    </section>
+    <TaskPanel
+      :mission-title="missionTitle"
+      :goal-text="missionGoal"
+      :status-text="missionFeedback.statusText"
+      :reward-text="missionFeedback.rewardText"
+      :performance-tier="missionFeedback.performanceTier"
+      @start="startMission"
+    />
 
     <ChapterMap
       :chapter-title="chapterTitle"
       :levels="levels"
-      :active-level="1"
+      :active-level="activeLevel"
       :expanded="mapExpanded"
       @toggle="mapExpanded = !mapExpanded"
     />
@@ -93,42 +130,5 @@ function pickCharacter(character) {
   background:
     radial-gradient(circle at top, rgba(255, 214, 102, 0.28), transparent 30%),
     linear-gradient(180deg, #fff9ef, #eef4ff 45%, #f8fbff);
-}
-
-.practice-shell,
-.task-shell {
-  display: grid;
-  gap: 0.75rem;
-  padding: 1rem;
-  border-radius: 1.25rem;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
-}
-
-.section-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.section-heading h2,
-.section-heading p {
-  margin: 0;
-}
-
-.section-heading p {
-  color: #5f6b7a;
-  font-size: 0.95rem;
-}
-
-:deep(.placeholder-block) {
-  display: grid;
-  place-items: center;
-  min-height: 6rem;
-  border-radius: 1rem;
-  border: 1px dashed rgba(95, 107, 122, 0.35);
-  color: #5f6b7a;
-  background: rgba(243, 246, 251, 0.9);
 }
 </style>
