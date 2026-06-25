@@ -66,6 +66,43 @@ describe('useHanziPractice', () => {
     expect(practice.totalMistakes.value).toBe(2)
   })
 
+  test('clears the previous mission result when switching to a new character', async () => {
+    let quizOptions
+    const writer = {
+      animateCharacter: vi.fn(),
+      quiz: vi.fn((options) => {
+        quizOptions = options
+        quizOptions.onComplete({ character: '我', totalMistakes: 2 })
+      }),
+      cancelQuiz: vi.fn(),
+      setCharacter: vi.fn(() => Promise.resolve()),
+      showCharacter: vi.fn(),
+    }
+    const targetRef = ref({ innerHTML: '' })
+
+    const practice = createScopedPractice({
+      targetRef,
+      createWriter: vi.fn((target, character, options) => {
+        options.onLoadCharDataSuccess({ strokes: ['a', 'b', 'c'] })
+        return writer
+      }),
+      initialChar: '我',
+    })
+
+    practice.startQuiz()
+    expect(practice.quizDone.value).toBe(true)
+    expect(practice.totalMistakes.value).toBe(2)
+
+    practice.inputChar.value = '好'
+    practice.submitChar()
+    await Promise.resolve()
+
+    expect(practice.currentChar.value).toBe('好')
+    expect(practice.quizDone.value).toBe(false)
+    expect(practice.totalMistakes.value).toBe(0)
+    expect(practice.currentStroke.value).toBe(0)
+  })
+
   test('cancels the quiz when the scope is disposed', () => {
     const writer = {
       animateCharacter: vi.fn(),

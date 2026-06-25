@@ -141,6 +141,9 @@ export function useHanziPractice({
       return
     }
 
+    quizDone.value = false
+    totalMistakes.value = 0
+    currentStroke.value = 0
     loading.value = true
     currentChar.value = nextChar
 
