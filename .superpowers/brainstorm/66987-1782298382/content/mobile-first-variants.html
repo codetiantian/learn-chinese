@@ -1,0 +1,109 @@
+<h2>移动端优先的星图任务页</h2>
+<p class="subtitle">先以手机屏幕为主设计，再向平板和桌面端扩展</p>
+
+<div class="cards">
+  <div class="card" data-choice="mobile-a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. 顶部进度 + 主舞台 + 底部地图（推荐）</div>
+        <div class="mockup-body" style="display:flex;justify-content:center;background:linear-gradient(180deg,#5aa5ff,#87d2ff);padding:16px;min-height:420px;">
+          <div style="width:220px;border-radius:28px;background:#f6fbff;padding:12px;box-shadow:0 12px 28px rgba(38,92,171,0.18);color:#24456f;">
+            <div style="border-radius:18px;background:linear-gradient(135deg,#4f79ff,#7e61ff);padding:12px;color:#fff;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="font-weight:700;font-size:13px;">第 1 章 · 新手星环</div>
+                <div style="background:#ffd45e;color:#6a4200;padding:2px 8px;border-radius:999px;font-size:11px;">x5</div>
+              </div>
+              <div style="margin-top:8px;height:8px;border-radius:999px;background:rgba(255,255,255,0.2);overflow:hidden;">
+                <div style="width:58%;height:100%;background:#ffd45e;"></div>
+              </div>
+              <div style="margin-top:6px;font-size:11px;opacity:0.9;">今日进度 58%</div>
+            </div>
+
+            <div style="margin-top:10px;border-radius:20px;background:#fff;padding:12px;">
+              <div style="font-size:12px;color:#6a88b0;">当前任务</div>
+              <div style="margin-top:4px;font-weight:700;">完成「我」的书写练习</div>
+              <div style="margin-top:8px;border-radius:18px;background:#f7f3ff;display:flex;align-items:center;justify-content:center;height:140px;font-size:54px;color:#6f4ac8;">我</div>
+              <div style="display:flex;gap:8px;margin-top:10px;">
+                <div style="flex:1;border-radius:14px;background:#eaf3ff;padding:8px;text-align:center;font-size:12px;">动画</div>
+                <div style="flex:1;border-radius:14px;background:#ff8b4a;color:#fff;padding:8px;text-align:center;font-size:12px;font-weight:700;">闯关</div>
+              </div>
+            </div>
+
+            <div style="margin-top:10px;border-radius:18px;background:#fff;padding:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:#6a88b0;">
+                <span>星图</span>
+                <span>展开</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;">
+                <div style="height:34px;border-radius:12px;background:#ffd45e;"></div>
+                <div style="height:34px;border-radius:12px;background:#dbe8ff;"></div>
+                <div style="height:34px;border-radius:12px;background:#dbe8ff;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>主舞台优先</h3>
+      <p>先让用户进入练习，再在底部查看章节地图。最适合移动端，也最不影响核心书写体验。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="mobile-b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. 顶部地图卡片 + 下方练习</div>
+        <div class="mockup-body" style="display:flex;justify-content:center;background:linear-gradient(180deg,#58a1ff,#8fe0ff);padding:16px;min-height:420px;">
+          <div style="width:220px;border-radius:28px;background:#f6fbff;padding:12px;box-shadow:0 12px 28px rgba(38,92,171,0.18);color:#24456f;">
+            <div style="border-radius:18px;background:linear-gradient(135deg,#4f79ff,#7e61ff);padding:12px;color:#fff;">
+              <div style="font-weight:700;font-size:13px;">汉字冒险星图</div>
+              <div style="display:flex;gap:8px;margin-top:10px;">
+                <div style="flex:1;height:42px;border-radius:14px;background:#ffd45e;"></div>
+                <div style="flex:1;height:42px;border-radius:14px;background:rgba(255,255,255,0.18);"></div>
+                <div style="flex:1;height:42px;border-radius:14px;background:rgba(255,255,255,0.18);"></div>
+              </div>
+            </div>
+
+            <div style="margin-top:10px;border-radius:18px;background:#fff;padding:12px;">
+              <div style="font-size:12px;color:#6a88b0;">任务目标</div>
+              <div style="margin-top:4px;font-weight:700;">错误少于 5 次</div>
+            </div>
+
+            <div style="margin-top:10px;border-radius:20px;background:#fff;padding:12px;">
+              <div style="border-radius:18px;background:#f7f3ff;display:flex;align-items:center;justify-content:center;height:156px;font-size:54px;color:#6f4ac8;">我</div>
+              <div style="display:flex;gap:8px;margin-top:10px;">
+                <div style="flex:1;border-radius:14px;background:#eaf3ff;padding:8px;text-align:center;font-size:12px;">动画</div>
+                <div style="flex:1;border-radius:14px;background:#ff8b4a;color:#fff;padding:8px;text-align:center;font-size:12px;font-weight:700;">开始</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>地图入口优先</h3>
+      <p>更强调“选关”感，但手机首屏会先看到地图，而不是直接进入练习。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>我更推荐 A</h4>
+      <ul>
+        <li>首屏直接进入当前任务，手机上效率最高</li>
+        <li>地图放到底部卡片或抽屉，更符合拇指操作</li>
+        <li>后续扩展到桌面端时，底部地图可以自然升级成左侧边栏</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>注意点</h4>
+      <ul>
+        <li>底部地图不能做太深，否则用户会忘记它存在</li>
+        <li>主舞台区要控制信息量，避免手机屏幕过满</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -54,6 +54,9 @@ export function useHanziPractice({
       },
     })
 
+    // HanziWriter 的 SVG 没有 viewBox，补上后才能随容器自适应缩放并保持居中
+    targetRef.value.querySelector?.('svg')?.setAttribute('viewBox', `0 0 ${SIZE} ${SIZE}`)
+
     return writer
   }
 
@@ -120,6 +123,8 @@ export function useHanziPractice({
   }
 
   function toggleLoop() {
+    if (mode.value !== 'animate') return
+
     loop.value = !loop.value
 
     if (loop.value && mode.value === 'animate') {

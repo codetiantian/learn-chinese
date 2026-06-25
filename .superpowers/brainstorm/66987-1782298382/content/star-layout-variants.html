@@ -1,0 +1,132 @@
+<h2>星图任务页的 3 种页面骨架</h2>
+<p class="subtitle">都保留现在的练字核心逻辑，只是把它包装成更有闯关感的学习界面</p>
+
+<div class="cards">
+  <div class="card" data-choice="layout-a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. 地图 + 任务双栏（推荐）</div>
+        <div class="mockup-body" style="background:linear-gradient(180deg,#2f6dd1,#6db6ff);padding:14px;min-height:300px;color:#fff;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:700;">汉字冒险星图</div>
+            <div style="padding:4px 10px;border-radius:999px;background:#ffd45e;color:#5d3a00;">连胜 x5</div>
+          </div>
+          <div style="display:grid;grid-template-columns:0.78fr 1.22fr;gap:10px;height:238px;">
+            <div style="border-radius:18px;background:rgba(255,255,255,0.14);padding:12px;">
+              <div class="label" style="color:#d9ecff;">章节地图</div>
+              <div style="margin-top:10px;display:grid;gap:10px;">
+                <div style="height:48px;border-radius:16px;background:#ffd45e;color:#5d3a00;display:flex;align-items:center;justify-content:center;font-weight:700;">第 1 章 已解锁</div>
+                <div style="height:48px;border-radius:16px;background:rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:center;">第 2 章</div>
+                <div style="height:48px;border-radius:16px;background:rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:center;">第 3 章</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-rows:1fr auto;gap:10px;">
+              <div style="display:grid;grid-template-columns:1fr 0.9fr;gap:10px;">
+                <div style="border-radius:18px;background:#fff7ff;color:#5a317e;display:flex;align-items:center;justify-content:center;font-size:64px;">我</div>
+                <div style="display:grid;gap:10px;">
+                  <div style="border-radius:16px;background:#ffffffd8;color:#214266;padding:12px;">
+                    <div class="label" style="color:#6989b8;">当前任务</div>
+                    <div style="font-weight:700;">完成「我」的书写练习</div>
+                    <div style="font-size:12px;margin-top:6px;">目标：错误少于 5 次</div>
+                  </div>
+                  <div style="border-radius:16px;background:#7d54ff;color:#fff;padding:12px;">
+                    <div class="label" style="color:#d8ccff;">奖励</div>
+                    <div>星星 +10 · 解锁新字卡</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <div style="flex:1;border-radius:16px;background:#ffffffd0;color:#214266;padding:10px;text-align:center;">动画演示</div>
+                <div style="flex:1;border-radius:16px;background:#ff8b4a;color:#fff;padding:10px;text-align:center;font-weight:700;">开始闯关</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>地图 + 任务双栏</h3>
+      <p>左侧固定章节星图，右侧集中做练习舞台和任务反馈，结构最清晰，也最容易拆组件。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="layout-b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. 顶部世界 + 中央舞台</div>
+        <div class="mockup-body" style="background:linear-gradient(180deg,#3150b8,#7ecfff);padding:14px;min-height:300px;color:#fff;">
+          <div style="border-radius:18px;background:rgba(255,255,255,0.14);padding:12px;margin-bottom:10px;">
+            <div style="display:flex;justify-content:space-between;">
+              <div style="font-weight:700;">云海星路</div>
+              <div>进度 45%</div>
+            </div>
+            <div style="margin-top:10px;height:44px;border-radius:999px;background:linear-gradient(90deg,#ffd45e 45%,rgba(255,255,255,0.18) 45%);"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;height:204px;">
+            <div style="border-radius:18px;background:rgba(255,255,255,0.14);padding:12px;">任务卡</div>
+            <div style="border-radius:18px;background:#fff7ff;color:#5a317e;display:flex;align-items:center;justify-content:center;font-size:64px;">我</div>
+            <div style="border-radius:18px;background:rgba(255,255,255,0.14);padding:12px;">奖励仓</div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:10px;">
+            <div style="flex:1;border-radius:16px;background:#ffffffd0;color:#214266;padding:10px;text-align:center;">动画</div>
+            <div style="flex:1;border-radius:16px;background:#ff8b4a;color:#fff;padding:10px;text-align:center;">书写</div>
+            <div style="flex:1;border-radius:16px;background:#7d54ff;color:#fff;padding:10px;text-align:center;">下一任务</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>顶部世界 + 中央舞台</h3>
+      <p>更像手游首页，情绪更满，但信息密度也更高，后续容易把重点从练字本身挤掉。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="layout-c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">C. 中央练习台 + 环绕信息</div>
+        <div class="mockup-body" style="background:linear-gradient(180deg,#2f4aa3,#5cb7ff);padding:14px;min-height:300px;color:#fff;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:700;">第 1 章 · 新手星环</div>
+            <div style="padding:4px 10px;border-radius:999px;background:#ffd45e;color:#5d3a00;">3 星目标</div>
+          </div>
+          <div style="display:grid;grid-template-columns:0.9fr 1.2fr 0.9fr;gap:10px;height:238px;">
+            <div style="display:grid;gap:10px;">
+              <div style="border-radius:16px;background:rgba(255,255,255,0.14);padding:12px;">章节</div>
+              <div style="border-radius:16px;background:rgba(255,255,255,0.14);padding:12px;">连胜</div>
+            </div>
+            <div style="border-radius:20px;background:#fff7ff;color:#5a317e;display:flex;align-items:center;justify-content:center;font-size:64px;">我</div>
+            <div style="display:grid;gap:10px;">
+              <div style="border-radius:16px;background:rgba(255,255,255,0.14);padding:12px;">任务</div>
+              <div style="border-radius:16px;background:rgba(255,255,255,0.14);padding:12px;">奖励</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>中央练习台 + 环绕信息</h3>
+      <p>最突出书写区，但层次关系更依赖细节控制，移动端收缩时也更容易乱。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>推荐 A 的原因</h4>
+      <ul>
+        <li>最适合把现在的大组件拆成地图区、任务区、练习区、状态区</li>
+        <li>后续如果加新章节或更多练字任务，扩展最自然</li>
+        <li>桌面端和移动端都比较容易重排</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>代价</h4>
+      <ul>
+        <li>地图区如果做太大，会削弱练习区的主角感</li>
+        <li>需要更明确的视觉层级，避免像后台面板</li>
+      </ul>
+    </div>
+  </div>
+</div>

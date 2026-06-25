@@ -1,0 +1,134 @@
+<h2>汉字练习页的游戏化方向</h2>
+<p class="subtitle">先选整体气质和布局主轴，再进入组件拆分与细节设计</p>
+
+<div class="cards">
+  <div class="card" data-choice="dojo" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. 道场闯关</div>
+        <div class="mockup-body" style="background:linear-gradient(180deg,#fff7e8,#ffe3b3);padding:14px;min-height:280px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:700;color:#6d3d0f;">Level 03 · 木字营</div>
+            <div style="padding:4px 10px;border-radius:999px;background:#fff;color:#c16d1a;">连胜 x4</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:10px;height:220px;">
+            <div style="border-radius:18px;background:#fff8ef;border:2px solid #efc17d;display:flex;align-items:center;justify-content:center;font-size:64px;color:#9d5a1f;">田</div>
+            <div style="display:grid;gap:10px;">
+              <div style="border-radius:16px;background:#fff;border:2px solid #efc17d;padding:12px;">
+                <div class="label">任务目标</div>
+                <div style="font-size:18px;font-weight:700;color:#6d3d0f;">写出「我」</div>
+              </div>
+              <div style="border-radius:16px;background:#6d3d0f;color:#fff;padding:12px;">
+                <div class="label" style="color:#ffd79b;">即时反馈</div>
+                <div>笔顺正确 +20</div>
+                <div>提示剩余 2 次</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <div style="flex:1;border-radius:14px;background:#fff;border:2px solid #efc17d;padding:10px;text-align:center;">动画</div>
+                <div style="flex:1;border-radius:14px;background:#ffa62b;color:#fff;padding:10px;text-align:center;">开始挑战</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>道场闯关</h3>
+      <p>顶部是关卡和连胜，中间是大练习区，右侧是任务卡和反馈，整体像训练场。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="mission" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. 星图任务</div>
+        <div class="mockup-body" style="background:linear-gradient(180deg,#0d1b3b,#1f3c73);padding:14px;min-height:280px;color:#fff;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:700;">汉字远征图</div>
+            <div style="padding:4px 10px;border-radius:999px;background:#2f5bd0;">今日能量 72</div>
+          </div>
+          <div style="display:grid;grid-template-columns:0.75fr 1.25fr;gap:10px;height:220px;">
+            <div style="border-radius:18px;background:rgba(255,255,255,0.08);padding:10px;">
+              <div class="label" style="color:#9bb6ff;">章节地图</div>
+              <div style="margin-top:10px;display:grid;gap:10px;">
+                <div style="height:40px;border-radius:999px;background:#4f7cff;"></div>
+                <div style="height:40px;border-radius:999px;background:rgba(255,255,255,0.14);"></div>
+                <div style="height:40px;border-radius:999px;background:rgba(255,255,255,0.14);"></div>
+              </div>
+            </div>
+            <div style="display:grid;gap:10px;">
+              <div style="border-radius:18px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:64px;">我</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div style="border-radius:16px;background:rgba(255,255,255,0.08);padding:12px;">
+                  <div class="label" style="color:#9bb6ff;">任务</div>
+                  <div>完成 8 笔</div>
+                </div>
+                <div style="border-radius:16px;background:rgba(255,255,255,0.08);padding:12px;">
+                  <div class="label" style="color:#9bb6ff;">奖励</div>
+                  <div>解锁新字卡</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>星图任务</h3>
+      <p>左侧保留章节导航，主区域更像“推进地图 + 完成任务”，适合做成长感。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="arena" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">C. 对战舞台</div>
+        <div class="mockup-body" style="background:linear-gradient(180deg,#1d1028,#3d1f58);padding:14px;min-height:280px;color:#fff;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:700;">Boss 训练局</div>
+            <div style="padding:4px 10px;border-radius:999px;background:#f34f7a;">倒计时 18s</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr;gap:10px;height:220px;">
+            <div style="display:grid;grid-template-columns:1fr 0.9fr;gap:10px;">
+              <div style="border-radius:18px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:66px;">我</div>
+              <div style="display:grid;gap:10px;">
+                <div style="border-radius:16px;background:rgba(255,255,255,0.08);padding:12px;">连击槽</div>
+                <div style="border-radius:16px;background:rgba(255,255,255,0.08);padding:12px;">失误警报</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+              <div style="border-radius:16px;background:#2ee6a6;color:#112117;padding:10px;text-align:center;">播放</div>
+              <div style="border-radius:16px;background:#fff1;color:#fff;padding:10px;text-align:center;">重来</div>
+              <div style="border-radius:16px;background:#fff1;color:#fff;padding:10px;text-align:center;">下一关</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>对战舞台</h3>
+      <p>更强调紧张感和即时反馈，适合把练字包装成回合挑战，但会更“游戏化”。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>我当前更推荐 A</h4>
+      <ul>
+        <li>最贴合“学习 + 练习”双模式</li>
+        <li>容易从现有单组件演进到清晰模块</li>
+        <li>游戏感够强，但不会压过教学体验</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>需要避免</h4>
+      <ul>
+        <li>做成纯卡通首页，反而影响可用性</li>
+        <li>信息过多，挤压核心书写区域</li>
+        <li>为了炫而牺牲移动端操作</li>
+      </ul>
+    </div>
+  </div>
+</div>

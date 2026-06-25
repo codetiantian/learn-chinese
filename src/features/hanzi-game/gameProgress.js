@@ -1,16 +1,7 @@
-const REWARDS_BY_TIER = {
-  perfect: {
-    stars: 10,
-    streakDelta: 1,
-  },
-  strong: {
-    stars: 6,
-    streakDelta: 1,
-  },
-  complete: {
-    stars: 3,
-    streakDelta: 1,
-  },
+const FEEDBACK_BY_TIER = {
+  perfect: '完美书写，笔笔精准！',
+  strong: '表现出色，继续巩固！',
+  complete: '已完成书写，再练几次更好！',
 }
 
 export function getPerformanceTier(mistakes) {
@@ -25,18 +16,13 @@ export function getPerformanceTier(mistakes) {
   return 'complete'
 }
 
-export function buildRoundReward(performanceTier) {
-  return { ...REWARDS_BY_TIER[performanceTier] }
-}
-
 export function buildMissionFeedback({ character, mistakes }) {
   const performanceTier = getPerformanceTier(mistakes)
-  const reward = buildRoundReward(performanceTier)
 
   return {
     statusText: `完成「${character}」书写任务`,
     goalText: `本轮错误 ${mistakes} 次，继续巩固可拿更高评价`,
-    rewardText: `获得 ${reward.stars} 颗星星，连胜 +${reward.streakDelta}`,
+    rewardText: FEEDBACK_BY_TIER[performanceTier],
     performanceTier,
   }
 }
