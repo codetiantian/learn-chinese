@@ -1,9 +1,9 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import { useHanziPractice } from '@/composables/useHanziPractice'
 
-import { buildMissionFeedback } from './gameProgress'
+import { buildMissionFeedback, buildRoundReward } from './gameProgress'
 import ChapterMap from './components/ChapterMap.vue'
 import CharacterPicker from './components/CharacterPicker.vue'
 import GameHeader from './components/GameHeader.vue'
@@ -50,6 +50,18 @@ const missionTier = computed(() => (
 onMounted(() => {
   practice.mount()
 })
+
+watch(
+  () => practice.quizDone.value,
+  (isDone, wasDone) => {
+    if (!isDone || wasDone) return
+
+    const reward = buildRoundReward(missionFeedback.value.performanceTier)
+    stars.value += reward.stars
+    streak.value += reward.streakDelta
+  },
+  { immediate: true },
+)
 
 function updateInputChar(value) {
   practice.inputChar.value = value

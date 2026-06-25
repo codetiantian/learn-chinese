@@ -103,6 +103,29 @@ describe('useHanziPractice', () => {
     expect(practice.currentStroke.value).toBe(0)
   })
 
+  test('stops the looped animation when toggled off', () => {
+    const writer = {
+      animateCharacter: vi.fn(),
+      loopCharacterAnimation: vi.fn(),
+      quiz: vi.fn(),
+      cancelQuiz: vi.fn(),
+      showCharacter: vi.fn(),
+    }
+    const targetRef = ref({ innerHTML: '' })
+
+    const practice = createScopedPractice({
+      targetRef,
+      createWriter: vi.fn(() => writer),
+      initialChar: '我',
+    })
+
+    practice.toggleLoop()
+    expect(writer.loopCharacterAnimation).toHaveBeenCalledTimes(1)
+
+    practice.toggleLoop()
+    expect(writer.showCharacter).toHaveBeenCalledTimes(1)
+  })
+
   test('cancels the quiz when the scope is disposed', () => {
     const writer = {
       animateCharacter: vi.fn(),

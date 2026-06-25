@@ -54,7 +54,7 @@ const emit = defineEmits(['update:mode', 'play', 'toggle-loop', 'start-quiz'])
       <div :ref="props.writerTarget" class="writer-target" />
     </div>
 
-    <div class="mode-row" role="tablist" aria-label="练习模式">
+    <div class="mode-row" aria-label="练习模式">
       <button
         type="button"
         class="mode-pill"

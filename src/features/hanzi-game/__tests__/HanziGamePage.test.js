@@ -105,4 +105,15 @@ describe('HanziGamePage', () => {
     await remountedStartButtons[0].trigger('click')
     expect(practiceState.startQuiz).toHaveBeenCalledTimes(1)
   })
+
+  test('reflects earned rewards in the header after a completed mission', () => {
+    practiceState.quizDone.value = true
+    practiceState.totalMistakes.value = 2
+
+    const wrapper = mount(HanziGamePage)
+
+    expect(wrapper.text()).toContain('24')
+    expect(wrapper.text()).toContain('4 天')
+    expect(wrapper.text()).toContain('获得 6 颗星星，连胜 +1')
+  })
 })

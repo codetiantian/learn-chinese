@@ -116,6 +116,7 @@ export function useHanziPractice({
   function mount() {
     ensureWriter()
     writer?.animateCharacter?.()
+    status.value = '正在演示笔画顺序...'
   }
 
   function toggleLoop() {
@@ -123,7 +124,10 @@ export function useHanziPractice({
 
     if (loop.value && mode.value === 'animate') {
       playAnimation()
+      return
     }
+
+    writer?.showCharacter?.()
   }
 
   function submitChar() {
