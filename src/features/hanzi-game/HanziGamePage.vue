@@ -32,10 +32,20 @@ const practice = useHanziPractice({
 const missionTitle = computed(() => `完成「${practice.currentChar.value}」的书写练习`)
 const missionGoal = '目标：错误少于 5 次'
 const activeLevel = computed(() => (practice.mode.value === 'quiz' ? 2 : 1))
+const canStartMission = computed(() => !practice.loading.value && practice.hasData.value)
 const missionFeedback = computed(() => buildMissionFeedback({
   character: practice.currentChar.value,
   mistakes: practice.totalMistakes.value,
 }))
+const missionStatusText = computed(() => (
+  practice.quizDone.value ? missionFeedback.value.statusText : practice.status.value
+))
+const missionRewardText = computed(() => (
+  practice.quizDone.value ? missionFeedback.value.rewardText : '完成当前任务后解锁星星奖励'
+))
+const missionTier = computed(() => (
+  practice.quizDone.value ? missionFeedback.value.performanceTier : 'complete'
+))
 
 onMounted(() => {
   practice.mount()
@@ -54,10 +64,13 @@ function pickCharacter(character) {
 }
 
 function setMode(mode) {
+  if (mode === 'quiz' && !canStartMission.value) return
   practice.mode.value = mode
 }
 
 function startMission() {
+  if (!canStartMission.value) return
+
   if (practice.mode.value === 'quiz') {
     practice.startQuiz()
     return
@@ -105,9 +118,10 @@ function startMission() {
     <TaskPanel
       :mission-title="missionTitle"
       :goal-text="missionGoal"
-      :status-text="missionFeedback.statusText"
-      :reward-text="missionFeedback.rewardText"
-      :performance-tier="missionFeedback.performanceTier"
+      :status-text="missionStatusText"
+      :reward-text="missionRewardText"
+      :performance-tier="missionTier"
+      :disabled="!canStartMission"
       @start="startMission"
     />
 

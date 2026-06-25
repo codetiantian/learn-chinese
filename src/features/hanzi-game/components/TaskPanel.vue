@@ -20,6 +20,10 @@ const props = defineProps({
     type: String,
     default: 'complete',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['start'])
@@ -38,7 +42,7 @@ const emit = defineEmits(['start'])
       <strong>{{ props.rewardText }}</strong>
     </div>
 
-    <button type="button" class="start-button" @click="emit('start')">
+    <button type="button" class="start-button" :disabled="props.disabled" @click="emit('start')">
       开始闯关
     </button>
   </section>
@@ -89,5 +93,9 @@ h2 {
   font: inherit;
   color: #132238;
   background: #f5d76e;
+}
+
+.start-button:disabled {
+  opacity: 0.6;
 }
 </style>

@@ -11,9 +11,10 @@ const practiceMock = vi.hoisted(() => ({
 vi.mock('@/composables/useHanziPractice', () => practiceMock)
 
 describe('HanziGamePage', () => {
+  let practiceState
+
   beforeEach(() => {
-    practiceMock.useHanziPractice.mockReset()
-    practiceMock.useHanziPractice.mockReturnValue({
+    practiceState = {
       inputChar: ref('我'),
       currentChar: ref('我'),
       mode: ref('animate'),
@@ -32,7 +33,9 @@ describe('HanziGamePage', () => {
       toggleLoop: vi.fn(),
       submitChar: vi.fn(),
       pickPreset: vi.fn(),
-    })
+    }
+    practiceMock.useHanziPractice.mockReset()
+    practiceMock.useHanziPractice.mockReturnValue(practiceState)
   })
 
   test('renders the chapter shell sections', () => {
@@ -51,5 +54,39 @@ describe('HanziGamePage', () => {
     expect(wrapper.text()).toContain('目标：错误少于 5 次')
     expect(wrapper.text()).toContain('动画演示')
     expect(wrapper.text()).toContain('开始闯关')
+  })
+
+  test('wires mount and page actions into the practice composable', async () => {
+    const wrapper = mount(HanziGamePage)
+
+    expect(practiceState.mount).toHaveBeenCalledTimes(1)
+
+    await wrapper.find('input').setValue('学')
+    await wrapper.find('input').trigger('keyup.enter')
+    expect(practiceState.submitChar).toHaveBeenCalledTimes(1)
+
+    const presetButton = wrapper.findAll('.preset').find((node) => node.text() === '好')
+    await presetButton.trigger('click')
+    expect(practiceState.pickPreset).toHaveBeenCalledWith('好')
+
+    const buttons = wrapper.findAll('button')
+    const playButton = buttons.find((node) => node.text() === '播放动画')
+    const loopButton = buttons.find((node) => node.text() === '循环演示')
+    const startButtons = buttons.filter((node) => node.text() === '开始闯关')
+
+    await playButton.trigger('click')
+    expect(practiceState.playAnimation).toHaveBeenCalledTimes(1)
+
+    await loopButton.trigger('click')
+    expect(practiceState.toggleLoop).toHaveBeenCalledTimes(1)
+
+    await startButtons[0].trigger('click')
+    expect(practiceState.mode.value).toBe('quiz')
+
+    practiceState.mode.value = 'quiz'
+    const remounted = mount(HanziGamePage)
+    const remountedStartButtons = remounted.findAll('button').filter((node) => node.text() === '开始闯关')
+    await remountedStartButtons[0].trigger('click')
+    expect(practiceState.startQuiz).toHaveBeenCalledTimes(1)
   })
 })
