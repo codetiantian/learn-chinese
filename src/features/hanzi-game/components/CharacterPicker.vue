@@ -23,6 +23,11 @@ const emit = defineEmits(['update:inputChar', 'submit', 'pick'])
 function handleInput(event) {
   emit('update:inputChar', event.target.value)
 }
+
+function handleSubmit() {
+  if (props.loading) return
+  emit('submit')
+}
 </script>
 
 <template>
@@ -35,9 +40,9 @@ function handleInput(event) {
         maxlength="1"
         placeholder="输入一个汉字"
         @input="handleInput"
-        @keyup.enter="emit('submit')"
+        @keyup.enter="handleSubmit"
       />
-      <button type="button" :disabled="props.loading" @click="emit('submit')">
+      <button type="button" :disabled="props.loading" @click="handleSubmit">
         {{ props.loading ? '加载中…' : '开始' }}
       </button>
     </div>

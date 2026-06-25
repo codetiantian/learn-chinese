@@ -1,9 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 import ChapterMap from './components/ChapterMap.vue'
 import CharacterPicker from './components/CharacterPicker.vue'
 import GameHeader from './components/GameHeader.vue'
+
+const PracticeStage = defineComponent({
+  name: 'PracticeStage',
+  template: '<div class="placeholder-block">练习舞台将在下一步接入</div>',
+})
+
+const TaskPanel = defineComponent({
+  name: 'TaskPanel',
+  template: '<div class="placeholder-block">任务面板将在下一步接入</div>',
+})
 
 const chapterTitle = '第 1 章'
 const dailyProgress = 42
@@ -110,5 +120,15 @@ function pickCharacter(character) {
 .section-heading p {
   color: #5f6b7a;
   font-size: 0.95rem;
+}
+
+:deep(.placeholder-block) {
+  display: grid;
+  place-items: center;
+  min-height: 6rem;
+  border-radius: 1rem;
+  border: 1px dashed rgba(95, 107, 122, 0.35);
+  color: #5f6b7a;
+  background: rgba(243, 246, 251, 0.9);
 }
 </style>
