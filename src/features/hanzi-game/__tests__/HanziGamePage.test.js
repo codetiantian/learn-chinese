@@ -47,6 +47,22 @@ describe('HanziGamePage', () => {
     expect(wrapper.text()).toContain('星图关卡')
   })
 
+  test('renders the mobile-first region order for the page shell', () => {
+    const wrapper = mount(HanziGamePage)
+
+    const regionOrder = wrapper
+      .findAll('[data-region]')
+      .map((node) => node.attributes('data-region'))
+
+    expect(regionOrder).toEqual([
+      'header',
+      'picker',
+      'stage',
+      'task-panel',
+      'chapter-map',
+    ])
+  })
+
   test('renders the mission practice experience from practice state', () => {
     const wrapper = mount(HanziGamePage)
 
